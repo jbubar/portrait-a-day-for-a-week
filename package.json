@@ -1,0 +1,39 @@
+{
+  "name": "self-portrait-a-day",
+  "version": "1.0.0",
+  "description": "make a self portrait a day",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "server": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/jbubar/codetest.git"
+  },
+  "keywords": [
+    "portrait"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/jbubar/codetest/issues"
+  },
+  "homepage": "https://gitlab.com/jbubar/codetest#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^5.12.11",
+    "multer": "^1.4.2",
+    "multer-gridfs-storage": "^4.2.0",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "validator": "^13.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
