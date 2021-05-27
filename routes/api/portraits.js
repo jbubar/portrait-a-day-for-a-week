@@ -28,10 +28,11 @@ module.exports = (upload) => {
     .post(upload.single("file"), (req, res, next) => {
       console.log(req.body);
       // check for existing images
-      Portrait.findOne({ caption: req.body.caption })
-        .then((image) => {
-          console.log(image);
-          if (image) {
+      Portrait.findOne({ description: req.body.description })
+        .then((portrait) => {
+          console.log(portrait);
+          if (portrait) {
+            // delete file that was just uploaded
             return res.status(200).json({
               success: false,
               message: "Portrait already exists",
@@ -42,16 +43,16 @@ module.exports = (upload) => {
             artist: req.body.artist,
             description: req.body.description,
             funFact: req.body.funFact,
-            imgName: req.file.imgName,
+            imgName: req.file.filename,
             imgId: req.file.id,
           });
 
           newPortrait
             .save()
-            .then((image) => {
+            .then((portrait) => {
               res.status(200).json({
                 success: true,
-                image,
+                portrait,
               });
             })
             .catch((err) => res.status(500).json(err));
@@ -60,10 +61,10 @@ module.exports = (upload) => {
     })
     .get((req, res, next) => {
       Portrait.find({})
-        .then((images) => {
+        .then((portraits) => {
           res.status(200).json({
             success: true,
-            images,
+            portraits,
           });
         })
         .catch((err) => res.status(500).json(err));
