@@ -1,0 +1,22 @@
+.show-page-inner{
+    width: 100%;
+    display: flex;
+    img {
+        width: calc(100% - 400px);
+    }
+}
+.delete-btn {
+    margin: auto auto 20px auto;
+    padding: 10px;
+    color: firebrick;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    width: 80%;
+    justify-content: space-around;
+    cursor: pointer;
+    &:hover{
+        color: white;
+        background-color: firebrick;
+    }
+}

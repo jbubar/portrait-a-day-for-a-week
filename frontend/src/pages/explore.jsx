@@ -15,7 +15,6 @@ export default function ExplorePage({ portraits }) {
     }
     return (
         <div className="backdrop">
-            {console.log('explore')}
             <div className="next-arrow" onClick={()=>{shiftIndex("previous")}}>{"<"}</div>
             <Card portrait={portraits[index]} />
             <div className="next-arrow" onClick={()=>{shiftIndex("next")}}>{">"}</div>
