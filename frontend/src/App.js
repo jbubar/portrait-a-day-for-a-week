@@ -33,8 +33,7 @@ function App() {
 {            console.log('portraits:', portraits)
 }          </Route>
           <Route exact path="/">
-            <ListPage />
-            <h1>All</h1>
+            <ListPage portraits={portraits} />
           </Route>
         </Switch>
       </div>
