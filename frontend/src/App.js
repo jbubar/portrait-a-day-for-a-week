@@ -4,9 +4,9 @@ import axios from "axios";
 import UploadPage from "./pages/upload";
 import Nav from './components/nav';
 import ExplorePage from './pages/explore';
+import UpdatePage from './pages/update';
 import ListPage from './pages/list-page';
 import ShowPage from './pages/show';
-// import logo from './logo.svg';
 import './assets/styles/main.scss';
 
 function App() {
@@ -17,6 +17,10 @@ function App() {
   const addPortrait = (portrait) => {
     setPortraits([...portraits, portrait])
   }
+  const updatePortrait = (portrait) => {
+    let newP = portraits.map((p) => p._id === portrait._id ? portrait : p)
+    setPortraits([...newP]);
+  };
   useEffect(() => {
     getPortraits();
   }, [])
@@ -34,6 +38,9 @@ function App() {
           </Route>
           <Route path="/portraits/:portraitId">
             <ShowPage portraits={portraits} />
+          </Route>
+          <Route path="/update/:portraitId">
+            <UpdatePage updatePotrait={updatePortrait} />
           </Route>
           <Route exact path="/">
             <ListPage portraits={portraits} />

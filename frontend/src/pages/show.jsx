@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../assets/styles/show.scss';
 import { FaTrash } from 'react-icons/fa';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history'
 
 const history = createBrowserHistory()

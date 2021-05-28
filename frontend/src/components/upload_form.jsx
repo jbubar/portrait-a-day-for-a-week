@@ -3,35 +3,48 @@ import { useForm } from "react-hook-form";
 import UploadImage from "../assets/images/upload.svg";
 import axios from 'axios';
 
-export default function NewPortraitForm({ addPortrait }) {
+
+export default function PotraitForm({ formType, savePortrait, prevData }) {
     const [imgSrc, setImgSrc] = useState(UploadImage);
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit } = useForm({
+        defaultValues: prevData
+    });
     const loadFile = (e) => {
 	    setImgSrc(URL.createObjectURL(e.target.files[0]));
     }
     const onSubmit = async (data) => {
         let { title, artist, description, funFact } = data;
         const formData = new FormData();
-        formData.append("file", data.file[0]);
+        if(formType === 'create') formData.append("file", data.file[0]);
         formData.append("title", title);
         formData.append("artist", artist);
         formData.append("description", description);
         formData.append("funFact", funFact);
         console.log(formData)
-        axios.post("/api/portraits/", formData).then(res => addPortrait(res.data))
+        if (formType === "create"){
+            axios.post("/api/portraits/", formData).then(res => savePortrait(res.data))
+        } else if (formType === "update"){
+            console.log("update!")
+            axios.patch(`/api/portraits/${prevData._id}`, formData).then(res => {console.log(res);console.log(savePortrait)})
+        }
     }
-
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="card-container">
-            <label className="upload-input"> Upload your self portrait:
-                <img src={imgSrc} className="upload-img" id="upload" alt="" />
-                <input 
-                    type="file" 
-                    accept="image/png, image/jpeg, image/svg+xml"
-                    onChange={loadFile}
-                    {...register("file", { required: true})}
-                />
-            </label>    
+            {
+                formType === 'create' ? ( 
+                    <label className="upload-input"> Upload your self portrait:
+                        <img src={imgSrc} className="upload-img" id="upload" alt="" />
+                        <input 
+                            type="file" 
+                            accept="image/png, image/jpeg, image/svg+xml"
+                            onChange={loadFile}
+                            {...register("file", { required: true })}
+                        />
+                    </label>    
+                ) : (
+                    <img src={`/api/portraits/image/${prevData?.imgName}`} alt="" />
+                )
+            }
             <section className="card-bottom">
                 <label> <p>Title: </p>
                     <input type="text" placeholder="Title" {...register("title", { required: true})}/>

@@ -106,6 +106,16 @@ module.exports = (upload) => {
       .catch((err) => res.status(500).json(err));
   });
 
+  // update portrait
+  router.patch("/:portraitId", async (req, res) => {
+    let filter = { _id: req.params.portraitId}
+    let update = req.body
+    let updatedPortrait = await Portrait.findOneAndUpdate(filter, update, {
+      new: true,
+    });
+    return res.json(updatedPortrait)
+  });
+
   /*
         GET: Fetches all the files in the uploads collection
     */
