@@ -1,7 +1,7 @@
 import React from 'react';
 import '../assets/styles/card.scss';
 
-export default function Card(){
+export default function Card({ portrait }){
     return (
         <div className="card-container">
             <img src="/api/portraits/image/594d85b03fc2681f6c68de98a12b8c92.jpeg" alt="" />

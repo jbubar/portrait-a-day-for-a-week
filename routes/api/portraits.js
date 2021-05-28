@@ -60,10 +60,7 @@ module.exports = (upload) => {
     .get((req, res, next) => {
       Portrait.find({})
         .then((portraits) => {
-          res.status(200).json({
-            success: true,
-            portraits,
-          });
+          res.status(200).json(portraits);
         })
         .catch((err) => res.status(500).json(err));
     });

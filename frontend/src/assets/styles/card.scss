@@ -1,6 +1,7 @@
 .card-container{
     background: white;
     max-width: 400px;
+    flex-basis: 400px;
     overflow: hidden;
     margin: 15px;
     img {
@@ -8,5 +9,7 @@
     }
     .card-bottom {
         margin: 10px;
+        display: flex;
+        flex-direction: column;
     }
 }
