@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import UploadImage from "../assets/images/upload.svg";
 import axios from 'axios';
 
-export default function NewPortraitForm() {
+export default function NewPortraitForm({ addPortrait }) {
     const [imgSrc, setImgSrc] = useState(UploadImage);
     const { register, handleSubmit } = useForm();
     const loadFile = (e) => {
@@ -18,7 +18,7 @@ export default function NewPortraitForm() {
         formData.append("description", description);
         formData.append("funFact", funFact);
         console.log(formData)
-        axios.post("/api/portraits/", formData).then(res => console.log(res, res.data))
+        axios.post("/api/portraits/", formData).then(res => addPortrait(res.data))
     }
 
     return (

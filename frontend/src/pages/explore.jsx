@@ -9,7 +9,8 @@ export default function ExplorePage({ portraits }) {
         if (direction === "next"){ 
             setIndex((index + 1) % stackLen)
         } else if (direction === "previous") {
-            setIndex((index + 1) % stackLen)
+            let newIndex = index === 0 ? stackLen - 1 : (index - 1) % stackLen
+            setIndex(newIndex)
         }
     }
     return (
