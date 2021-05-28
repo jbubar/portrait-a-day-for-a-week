@@ -1,9 +1,10 @@
 import React from 'react';
+import '../assets/styles/card.scss';
 
 export default function Card(){
     return (
         <div className="card-container">
-            <img src="/api/portraits/image/7d08f18685884dfc654f0eb625c83134.png" alt="" />
+            <img src="/api/portraits/image/594d85b03fc2681f6c68de98a12b8c92.jpeg" alt="" />
             <section className="card-bottom">
                 <h3 className="title">
                     Title

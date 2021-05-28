@@ -1,0 +1,14 @@
+body{
+    margin: 0;
+    height: 100vh;
+}
+div#root{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.page-contain{
+    background: lightgray;
+    flex-grow: 1;
+    display: flex;
+}
