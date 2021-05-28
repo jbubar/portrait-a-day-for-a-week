@@ -5,6 +5,7 @@ import UploadPage from "./pages/upload";
 import Nav from './components/nav';
 import ExplorePage from './pages/explore';
 import ListPage from './pages/list-page';
+import ShowPage from './pages/show';
 // import logo from './logo.svg';
 import './assets/styles/main.scss';
 
@@ -30,8 +31,10 @@ function App() {
           </Route>
           <Route path="/explore">
             <ExplorePage portraits={portraits} />
-{            console.log('portraits:', portraits)
-}          </Route>
+          </Route>
+          <Route path="/portraits/:portraitId">
+            <ShowPage portraits={portraits} />
+          </Route>
           <Route exact path="/">
             <ListPage portraits={portraits} />
           </Route>

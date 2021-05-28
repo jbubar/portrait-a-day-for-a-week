@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../assets/styles/card.scss';
 
 export default function Card({ portrait }){
@@ -7,7 +8,7 @@ export default function Card({ portrait }){
         return date.toString().split(' ').slice(1, 4).join(' ');
     }
     return (
-        <div className="card-container">
+        <Link to={`/portraits/${portrait?._id}`} className="card-container">
             <img src={`/api/portraits/image/${portrait?.imgName}`} alt="" />
             <section className="card-bottom">
                 <h3 className="title">
@@ -26,6 +27,6 @@ export default function Card({ portrait }){
                     Last edited: {formatDate(portrait?.updatedAt)}
                 </sub>
             </section>
-        </div>
+        </Link>
     )
 }

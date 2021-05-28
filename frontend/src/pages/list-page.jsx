@@ -5,7 +5,7 @@ export default function ListPage({ portraits }) {
     return (
         <div className="all-cards">
             { portraits.map(portrait => (
-                <Card portrait={portrait} />
+                <Card key={portrait._id} portrait={portrait} />
             ))}
         </div>
     )
