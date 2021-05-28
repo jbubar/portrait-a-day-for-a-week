@@ -1,15 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useForm } from "react-hook-form";
+import axios from 'axios';
 
 export default function NewPortraitForm() {
-    // const [portrait, setPortrait] = useState({
-    //     title: '',
-    //     artist: '',
-    //     description: '',
-    //     funFact: '',
-    //     uploadedImageUrl: '',
-    //     uploadedImage: {},
-    // })
     const { register, handleSubmit } = useForm();
     const onSubmit = async (data) => {
         let { title, artist, description, funFact } = data;
@@ -20,19 +13,7 @@ export default function NewPortraitForm() {
         formData.append("description", description);
         formData.append("funFact", funFact);
         console.log(formData)
-        const dataObj = {
-            file: data.file[0],
-            title,
-            artist,
-            description,
-            funFact
-        }
-        console.log('dataObj', dataObj)
-        const res = await fetch("/api/portraits/", {
-            method: 'POST',
-            body: formData
-        }).then(res => console.log(console.log(res.json())))
-        console.log('res:', await res.json())
+        axios.post("/api/portraits/", formData).then(res => console.log(res, res.data))
     }
 
     return (

@@ -1,0 +1,10 @@
+nav {
+    display: flex;
+    padding: 15px;
+    .nav-item:first-child{
+        margin-right: auto;
+    }
+    .nav-item {
+        padding: 10px;
+    }
+}
