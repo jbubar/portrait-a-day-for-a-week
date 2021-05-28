@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import { useForm } from "react-hook-form";
 import UploadImage from "../assets/images/upload.svg";
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 
 export default function PotraitForm({ formType, savePortrait, prevData }) {
+    const [submitted, setSubmitted] = useState(false)
     const [imgSrc, setImgSrc] = useState(UploadImage);
     const { register, handleSubmit } = useForm({
         defaultValues: prevData
@@ -29,12 +31,19 @@ export default function PotraitForm({ formType, savePortrait, prevData }) {
             })
         }
         if (formType === "create"){
-            axios.post("/api/portraits/", formData).then(res => savePortrait(res.data))
+            axios.post("/api/portraits/", formData).then(res => {
+                savePortrait(res.data);
+                setSubmitted(res.data._id) 
+            })
         } else if (formType === "update"){
-            axios.patch(`/api/portraits/${prevData._id}`, updatedData).then(res => {savePortrait(res.data)})
+            axios.patch(`/api/portraits/${prevData._id}`, updatedData).then(res => {
+                savePortrait(res.data); 
+                setSubmitted(prevData._id) 
+            })
         }
     }
     return (
+        <>{ !submitted ? ( 
         <form onSubmit={handleSubmit(onSubmit)} className="card-container">
             {
                 formType === 'create' ? ( 
@@ -69,5 +78,7 @@ export default function PotraitForm({ formType, savePortrait, prevData }) {
                 </label>
             </section>
         </form>
+        ) : <Redirect to={`/portraits/${submitted}`} /> }
+        </>
     )
 }

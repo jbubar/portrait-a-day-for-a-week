@@ -5,9 +5,6 @@ import '../assets/styles/show.scss';
 import { FaTrash } from 'react-icons/fa';
 import { MdModeEdit } from 'react-icons/md';
 import { Redirect } from 'react-router-dom';
-import { createBrowserHistory } from 'history'
-
-const history = createBrowserHistory()
 
 export default function Show() {
     const [ portrait, setPortrait ] = useState({})
