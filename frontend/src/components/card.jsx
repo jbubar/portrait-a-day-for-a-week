@@ -2,24 +2,28 @@ import React from 'react';
 import '../assets/styles/card.scss';
 
 export default function Card({ portrait }){
+    const formatDate = (dateStr) => {
+        let date = new Date(dateStr);
+        return date.toString().split(' ').slice(1, 4).join(' ');
+    }
     return (
         <div className="card-container">
-            <img src="/api/portraits/image/594d85b03fc2681f6c68de98a12b8c92.jpeg" alt="" />
+            <img src={`/api/portraits/image/${portrait?.imgName}`} alt="" />
             <section className="card-bottom">
                 <h3 className="title">
-                    Title
+                    {portrait?.title}
                 </h3>
                 <h4 className="artist">
-                    Artist
+                    {portrait?.artist}
                 </h4>
                 <p className="description">
-                    Description: lorem ipsum dolor sit amet, consectetur adiplorem ipsum dolor sit amet, consectetur adiplorem ipsum dolor sit amet, consectetur adip
+                    {portrait?.description}
                 </p>
                 <p className="fun-fact">
-                    Fun fact: lorem ipsum dolor sit amet, consectetur adip
+                    {portrait?.funFact}
                 </p>
                 <sub> 
-                    Last edited:
+                    Last edited: {formatDate(portrait?.updatedAt)}
                 </sub>
             </section>
         </div>
