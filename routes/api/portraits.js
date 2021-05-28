@@ -21,18 +21,18 @@ module.exports = (upload) => {
   });
 
   /*
-        POST: Upload a single image/file to Portrait collection
+        Create: Upload a single Portrait with image file
     */
   router
     .route("/")
     .post(upload.single("file"), (req, res, next) => {
-      console.log("in the post!", req.body)
+      console.log("in the post!", req.body);
       // check for existing images
       Portrait.findOne({ description: req.body.description })
         .then((portrait) => {
           console.log(portrait);
           if (portrait) {
-            // delete file that was just uploaded
+            // come back to delete file that was just uploaded
             return res.status(200).json({
               success: false,
               message: "Portrait already exists",
@@ -53,10 +53,13 @@ module.exports = (upload) => {
             .then((portrait) => {
               res.status(200).json(portrait);
             })
-            .catch((error) => res.status(500).json({error}));
+            .catch((error) => res.status(500).json({ error }));
         })
         .catch((err) => res.status(500).json(err));
     })
+    /*
+        List
+    */
     .get((req, res, next) => {
       Portrait.find({})
         .then((portraits) => {
@@ -64,19 +67,30 @@ module.exports = (upload) => {
         })
         .catch((err) => res.status(500).json(err));
     });
+  /*
+        Read
+    */
+  router.route("/:portraitId").get(async (req, res) => {
+    try {
+      let portrait = await Portrait.findOne({ _id: req.params.portraitId });
+      return res.json(portrait);
+    } catch (err) {
+      console.log(err);
+    }
+  });
 
   /*
         GET: Delete an image from the collection
     */
-  router.route("/test/delete/:id").get((req, res, next) => {
-    Portrait.findOne({ _id: req.params.id })
+  router.route("/delete/:portraitId").get((req, res, next) => {
+    Portrait.findOne({ _id: req.params.portraitId })
       .then((portrait) => {
         if (portrait) {
-          Portrait.deleteOne({ _id: req.params.id })
+          Portrait.deleteOne({ _id: req.params.portraitId })
             .then(() => {
               return res.status(200).json({
                 success: true,
-                message: `File with ID: ${req.params.id} deleted`,
+                message: `File with ID: ${req.params.portraitId} deleted`,
               });
             })
             .catch((err) => {
@@ -85,38 +99,12 @@ module.exports = (upload) => {
         } else {
           res.status(200).json({
             success: false,
-            message: `File with ID: ${req.params.id} not found`,
+            message: `File with ID: ${req.params.portraitId} not found`,
           });
         }
       })
       .catch((err) => res.status(500).json(err));
   });
-
-  /*
-        GET: Fetch most recently added record
-    */
-  router.route("/recent").get((req, res, next) => {
-    Portrait.findOne({}, {}, { sort: { _id: -1 } })
-      .then((image) => {
-        res.status(200).json({
-          success: true,
-          image,
-        });
-      })
-      .catch((err) => res.status(500).json(err));
-  });
-
-  /*
-        POST: Upload multiple files upto 3
-    */
-  router
-    .route("/multiple")
-    .post(upload.array("file", 3), (req, res, next) => {
-      res.status(200).json({
-        success: true,
-        message: `${req.files.length} files uploaded successfully`,
-      });
-    });
 
   /*
         GET: Fetches all the files in the uploads collection

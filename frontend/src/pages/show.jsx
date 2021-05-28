@@ -3,6 +3,10 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../assets/styles/show.scss';
 import { FaTrash } from 'react-icons/fa';
+import { Redirect } from 'react-router-dom';
+import { createBrowserHistory } from 'history'
+
+const history = createBrowserHistory()
 
 export default function Show() {
     const [ portrait, setPortrait ] = useState({})
@@ -10,6 +14,14 @@ export default function Show() {
 
     const getPortrait = (portraitId) => {
         axios.get(`/api/portraits/${portraitId}`).then(portrait => setPortrait(portrait.data))
+    }
+    const deletePortrait = (portraitId) => {
+        axios.get(`/api/portraits/delete/${portraitId}`).then(msg => {
+            console.log(msg.data)
+            if(msg.data.success) {
+                history.push('/')
+            }
+        })
     }
     const formatDate = (dateStr) => {
         let date = new Date(dateStr);
@@ -40,7 +52,7 @@ export default function Show() {
                     <sub> 
                         Last edited: {formatDate(portrait?.updatedAt)}
                     </sub>
-                    <div className="delete-btn">
+                    <div className="delete-btn" onClick={() => deletePortrait(portrait?._id)}>
                         <FaTrash /> Delete this portrait permanantly
                     </div>
                 </section>
