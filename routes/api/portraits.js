@@ -24,9 +24,9 @@ module.exports = (upload) => {
         POST: Upload a single image/file to Portrait collection
     */
   router
-    .route("/test")
+    .route("/")
     .post(upload.single("file"), (req, res, next) => {
-      console.log(req.body);
+      console.log("in the post!", req.body)
       // check for existing images
       Portrait.findOne({ description: req.body.description })
         .then((portrait) => {
@@ -40,6 +40,7 @@ module.exports = (upload) => {
           }
 
           let newPortrait = new Portrait({
+            title: req.body.title,
             artist: req.body.artist,
             description: req.body.description,
             funFact: req.body.funFact,
@@ -50,12 +51,9 @@ module.exports = (upload) => {
           newPortrait
             .save()
             .then((portrait) => {
-              res.status(200).json({
-                success: true,
-                portrait,
-              });
+              res.status(200).json(portrait);
             })
-            .catch((err) => res.status(500).json(err));
+            .catch((error) => res.status(500).json({error}));
         })
         .catch((err) => res.status(500).json(err));
     })
@@ -75,8 +73,8 @@ module.exports = (upload) => {
     */
   router.route("/test/delete/:id").get((req, res, next) => {
     Portrait.findOne({ _id: req.params.id })
-      .then((image) => {
-        if (image) {
+      .then((portrait) => {
+        if (portrait) {
           Portrait.deleteOne({ _id: req.params.id })
             .then(() => {
               return res.status(200).json({

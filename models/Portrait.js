@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const PortraitSchema = new Schema(
   {
+    title: {
+      required: true,
+      type: String,
+    },
     artist: {
       type: String,
       required: true,
