@@ -26,7 +26,6 @@ function App() {
   }, [])
   return (
     <Router>
-      {console.log(portraits)}
       <Nav />
       <div className="page-contain">
         <Switch>
@@ -40,7 +39,7 @@ function App() {
             <ShowPage portraits={portraits} />
           </Route>
           <Route path="/update/:portraitId">
-            <UpdatePage updatePotrait={updatePortrait} />
+            <UpdatePage updatePortrait={updatePortrait} />
           </Route>
           <Route exact path="/">
             <ListPage portraits={portraits} />

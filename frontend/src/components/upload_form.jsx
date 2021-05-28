@@ -15,17 +15,23 @@ export default function PotraitForm({ formType, savePortrait, prevData }) {
     const onSubmit = async (data) => {
         let { title, artist, description, funFact } = data;
         const formData = new FormData();
-        if(formType === 'create') formData.append("file", data.file[0]);
-        formData.append("title", title);
-        formData.append("artist", artist);
-        formData.append("description", description);
-        formData.append("funFact", funFact);
-        console.log(formData)
+        let updatedData = {};
+        const fields = ['funFact', 'title', 'artist', 'description']
+        if(formType === 'create') { 
+            formData.append("file", data.file[0]);
+            formData.append("title", title);
+            formData.append("artist", artist);
+            formData.append("description", description);
+            formData.append("funFact", funFact);
+        } else {
+            fields.forEach(field => {
+                if(data[field] !== prevData[field]) updatedData[field] = data[field]
+            })
+        }
         if (formType === "create"){
             axios.post("/api/portraits/", formData).then(res => savePortrait(res.data))
         } else if (formType === "update"){
-            console.log("update!")
-            axios.patch(`/api/portraits/${prevData._id}`, formData).then(res => {console.log(res);console.log(savePortrait)})
+            axios.patch(`/api/portraits/${prevData._id}`, updatedData).then(res => {savePortrait(res.data)})
         }
     }
     return (
