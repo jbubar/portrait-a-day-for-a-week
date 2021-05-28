@@ -26,11 +26,9 @@ module.exports = (upload) => {
   router
     .route("/")
     .post(upload.single("file"), (req, res, next) => {
-      console.log("in the post!", req.body);
       // check for existing images
       Portrait.findOne({ description: req.body.description })
         .then((portrait) => {
-          console.log(portrait);
           if (portrait) {
             // come back to delete file that was just uploaded
             return res.status(200).json({
@@ -108,6 +106,8 @@ module.exports = (upload) => {
 
   // update portrait
   router.patch("/:portraitId", async (req, res) => {
+    console.log('req.body:', req.body)
+    console.log('req.params.portraitId:', req.params.portraitId)
     let filter = { _id: req.params.portraitId}
     let update = req.body
     let updatedPortrait = await Portrait.findOneAndUpdate(filter, update, {

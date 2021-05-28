@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../assets/styles/show.scss';
 import { FaTrash } from 'react-icons/fa';
-// import { Redirect } from 'react-router-dom';
+import { MdModeEdit } from 'react-icons/md';
+import { Redirect } from 'react-router-dom';
 import { createBrowserHistory } from 'history'
 
 const history = createBrowserHistory()
 
 export default function Show() {
     const [ portrait, setPortrait ] = useState({})
+    const [deleted, setDeleted] = useState(false)
     let { portraitId } = useParams();
 
     const getPortrait = (portraitId) => {
@@ -19,7 +21,7 @@ export default function Show() {
         axios.get(`/api/portraits/delete/${portraitId}`).then(msg => {
             console.log(msg.data)
             if(msg.data.success) {
-                history.push('/')
+                setDeleted(true)
             }
         })
     }
@@ -33,30 +35,37 @@ export default function Show() {
     })
 
     return (
-        <div className="show-page-inner">
-            <img src={`/api/portraits/image/${portrait?.imgName}`} alt="" />
-            <div className="card-container">
-                <section className="card-bottom">
-                    <h3 className="title">
-                        {portrait?.title}
-                    </h3>
-                    <h4 className="artist">
-                        {portrait?.artist}
-                    </h4>
-                    <p className="description">
-                        {portrait?.description}
-                    </p>
-                    <p className="fun-fact">
-                        {portrait?.funFact}
-                    </p>
-                    <sub> 
-                        Last edited: {formatDate(portrait?.updatedAt)}
-                    </sub>
-                    <div className="delete-btn" onClick={() => deletePortrait(portrait?._id)}>
-                        <FaTrash /> Delete this portrait permanantly
-                    </div>
-                </section>
+        <> { !deleted ? (
+            <div className="show-page-inner">
+                <img src={`/api/portraits/image/${portrait?.imgName}`} alt="" />
+                <div className="card-container">
+                    <section className="card-bottom">
+                        <h3 className="title">
+                            {portrait?.title}
+                        </h3>
+                        <h4 className="artist">
+                            {portrait?.artist}
+                        </h4>
+                        <p className="description">
+                            {portrait?.description}
+                        </p>
+                        <p className="fun-fact">
+                            {portrait?.funFact}
+                        </p>
+                        <sub> 
+                            Last edited: {formatDate(portrait?.updatedAt)}
+                        </sub>
+                        <Link to={`/update/${portraitId}`} className="update-btn">
+                            <MdModeEdit /> Edit this portrait
+                        </Link>
+                        <div className="delete-btn" onClick={() => deletePortrait(portrait?._id)}>
+                            <FaTrash /> Delete this portrait permanantly
+                        </div>
+                    </section>
+                </div>
             </div>
-        </div>
+        ) : <Redirect to='/' />
+    }
+    </>
     )
 }
