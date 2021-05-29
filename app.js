@@ -47,7 +47,7 @@ const upload = multer({ storage });
 
 app.use("/api/portraits",  portraits(upload));
 
-app.get("/", (req, res) => res.send("Hello World"));
+// app.get("/", (req, res) => res.send("Hello World"));
 
 const port = process.env.PORT || 5000;
 
