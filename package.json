@@ -4,7 +4,7 @@
   "description": "make a self portrait a day",
   "main": "app.js",
   "scripts": {
-    "start": "npm run dev",
+    "start": "node app.js",
     "server": "nodemon app.js",
     "frontend-install": "npm install --prefix frontend",
     "frontend": "npm start --prefix frontend",
